@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
-import { Button } from "../components";
+
+import styles from "../style";
+import { Button, Navbar, Hero } from "../components";
+import { register } from "../assets"; 
 
 const Register = () => {
     const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confPass, setConfPass] = useState("");
     const [error, setError] = useState({});
 
     useEffect(() => {
-        console.log(username);
-        console.log(error.error);
-
         if (username ? username.length < 5 : 0) {
             setError({
                 name: "username",
@@ -25,48 +28,85 @@ const Register = () => {
         }
     }, [username]);
 
+    useEffect(() => {
+        if (password ? password.length < 6 : 0) {
+            setError({
+                name: "password",
+                error: "Your password must be at least 6 characters long."
+            });
+        } else setError({});
+    }, [password]);
+
     return (
-        <div className="container mx-auto p-8 flex">
-            <div className="max-w-md w-full mx-auto">
-                <h1 className="text-4xl text-center mb-12
-                font-poppins">
-                    API Tunnel
-                </h1>
-                <div className="bg-black-gradient rounded-lg
-                overflow-hidden shadow-2x1">
-                    <div className="p-8">
-                        <form method="POST" action="#">
-                            <div className="mb-5">
-                                <label htmlFor="username" className="block mb-2 text-sm font-medium text-white">
-                                    Username
-                                </label>
-                                <div>{[error.name === "username" ? error.error : ""]}</div>
-                                <input type="text" value={username} onChange={e => setUsername(e.target.value)} name="username" className="rounded-2xl block w-full p-3 rounded bg-gray-100 border border-transparent focus:outline-none"></input>
+        <>
+        <div className="bg-primary w-full overflow-hidden
+        font-poppins">
+            <div className={`${styles.paddingX} ${styles.flexCenter}`}>
+                <div className={`${styles.boxWidth}`}>
+                    <Navbar />
+                </div>
+            </div>
+
+            <div clasName="relative h-[200px]">
+                <div className={`bg-primary ${styles.flexStart}`}>
+                    <div className={`${styles.boxWidth}`}>
+                        <section id="register" className={`flex md:flex-row flex-col
+                            sm:py-18 py-6`}>
+                            <div className={`flex-1 flex ${styles.flexCenter} hidden lg:block mr-24`}>
+                                <img
+                                    src={register}
+                                    alt="register"
+                                    className="w-[100%] h-[100%] pl-12 
+                                    relative pt-[42px] lg:pt-0 "
+                                    data-aos="fade-right"
+                                />
                             </div>
-                            <div className="mb-5">
-                                <label htmlFor="email" className="block mb-2 text-sm font-medium text-white">
-                                    E-Mail
-                                </label>
-                                <input type="email" name="email" className="rounded-2xl block w-full p-3 rounded bg-gray-100 border border-transparent focus:outline-none"></input>
+                            
+                            <div className={`flex-1 ${styles.flexStart} flex-col xl:px-0 sm:px-16 px-6
+                                object-fill content-center w-full py-6
+                                justify-between items-center navbar`}>
+                                <form method="POST" action="#">
+                                    <div className="w-full" data-aos="fade-left">
+                                        <div className="mb-5 sm:w-[60%]">
+                                            <label htmlFor="username" className="block mb-2 text-sm font-medium text-white">
+                                                Username
+                                            </label>
+                                            <div className="w-[500px]">
+                                                <span className="text-white">{[error.name === "username" ? error.error : ""]}</span>
+                                                <input type="text" value={username} onChange={e => setUsername(e.target.value)} name="username" className="form-control rounded-2xl block w-[550px] p-3 rounded bg-transparent border text-white focus:outline-none"></input>
+                                            </div>
+                                        </div>
+                                        <div className="mb-5">
+                                            <label htmlFor="email" className="block mb-2 text-sm font-medium text-white">
+                                                E-Mail
+                                            </label>
+                                            <input type="email" name="email" className="form-control rounded-2xl block w-[550px] p-3 rounded bg-transparent border text-white focus:outline-none"></input>
+                                        </div>
+                                        <div className="mb-5">
+                                            <label htmlFor="password" className="block mb-2 text-sm font-medium text-white">
+                                                Password
+                                            </label>
+                                            <div className="w-[500px]">
+                                                <span className="text-white">{[error.name === "password" ? error.error : ""]}</span>
+                                                <input type="password" value={password} onChange={e => setPassword(e.target.value)} name="password" className="form-control rounded-2xl block w-[550px] p-3 rounded bg-transparent border text-white focus:outline-none"></input>
+                                            </div>
+                                        </div>
+                                        <div className="mb-5">
+                                            <label htmlFor="confirm_password" className="block mb-2 text-sm font-medium text-white">
+                                                Confirm Password
+                                            </label>
+                                            <input type="password" name="confirm_password" className="form-control rounded-2xl block w-[550px] p-3 rounded bg-transparent border text-white focus:outline-none"></input>
+                                        </div>
+                                        <Button value="Register" styles="w-full" />
+                                    </div>
+                                </form>
                             </div>
-                            <div className="mb-5">
-                                <label htmlFor="password" className="block mb-2 text-sm font-medium text-white">
-                                    Password
-                                </label>
-                                <input type="text" name="password" className="rounded-2xl block w-full p-3 rounded bg-gray-100 border border-transparent focus:outline-none"></input>
-                            </div>
-                            <div className="mb-5">
-                                <label htmlFor="confirm_password" className="block mb-2 text-sm font-medium text-white">
-                                    Confirm Password
-                                </label>
-                                <input type="text" name="confirm_username" className="rounded-2xl block w-full p-3 rounded bg-gray-100 border border-transparent focus:outline-none"></input>
-                            </div>
-                            <Button value="Register" />
-                        </form>
+                        </section>
                     </div>
                 </div>
             </div>
         </div>
+        </>
     );
 }
 

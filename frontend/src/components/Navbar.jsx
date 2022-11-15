@@ -9,7 +9,7 @@ const Navbar = () => {
     return (
         <nav
         className="w-full flex py-6 justify-between
-            items center navbar">
+            items-center navbar">
         <span
             className="text-white text-[22px]
                 font-semibold">

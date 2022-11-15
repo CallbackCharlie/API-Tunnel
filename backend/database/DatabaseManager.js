@@ -17,6 +17,7 @@ class DatabaseManager {
         return new Promise(async (resolve, _) => {
             // username checks
             if (!/^[a-z0-9]+$/i.test(username)) resolve({
+                success: false,
                 error: {
                     field: "username",
                     message: "Your username must only contain alphanumeric characters."
@@ -24,6 +25,7 @@ class DatabaseManager {
             });
 
             if (username.length < 5) resolve({
+                success: false,
                 error: {
                     field: "username",
                     message: "Your username must be at least 5 characters long."
@@ -32,11 +34,21 @@ class DatabaseManager {
 
             const result = await User.findOne({ username: username });
             if (result) resolve({
+                success: false,
                 error: {
                     field: "username",
                     message: "That username is already taken."
                 }
-            })
+            });
+
+            // password checks
+            if (password.length < 6) resolve({
+                success: false,
+                error: {
+                    field: "password",
+                    message: "Your password must be at least 6 characters long."
+                }
+            });
             
             // hash password and insert user into database
             bcrypt.genSalt(10, async (err, salt) => {
