@@ -37,6 +37,20 @@ const Register = () => {
         } else setError({});
     }, [password]);
 
+    useEffect(() => {
+        console.log(email, email.length);
+        if (email.length === 0) {
+            setError({});
+        } else {
+            if (/^[^@]+@[^@]+\.[^@\.]{2,}$/.test(email)) {
+                setError({
+                    name: "email",
+                    error: "The email you provided is not valid."
+                });
+            } else setError({});
+        };
+    }, [email]);
+
     return (
         <>
         <div className="bg-primary w-full overflow-hidden
@@ -73,14 +87,17 @@ const Register = () => {
                                             </label>
                                             <div className="w-[500px]">
                                                 <span className="text-white">{[error.name === "username" ? error.error : ""]}</span>
-                                                <input type="text" value={username} onChange={e => setUsername(e.target.value)} name="username" className="form-control rounded-2xl block w-[550px] p-3 rounded bg-transparent border text-white focus:outline-none"></input>
+                                                <input type="text" value={username} onChange={e => setUsername(e.target.value)} name="username" className="form-control rounded-2xl block w-[550px] p-3 bg-transparent border text-white focus:outline-none"></input>
                                             </div>
                                         </div>
                                         <div className="mb-5">
                                             <label htmlFor="email" className="block mb-2 text-sm font-medium text-white">
                                                 E-Mail
                                             </label>
-                                            <input type="email" name="email" className="form-control rounded-2xl block w-[550px] p-3 rounded bg-transparent border text-white focus:outline-none"></input>
+                                            <div className="w-[500px]">
+                                            <span className="text-white">{[error.name === "email" ? error.error : ""]}</span>
+                                                <input type="email" value={email} onChange={e => setEmail(e.target.value)} name="email" className="form-control rounded-2xl block w-[550px] p-3 bg-transparent border text-white focus:outline-none"></input>
+                                            </div>
                                         </div>
                                         <div className="mb-5">
                                             <label htmlFor="password" className="block mb-2 text-sm font-medium text-white">
@@ -88,14 +105,16 @@ const Register = () => {
                                             </label>
                                             <div className="w-[500px]">
                                                 <span className="text-white">{[error.name === "password" ? error.error : ""]}</span>
-                                                <input type="password" value={password} onChange={e => setPassword(e.target.value)} name="password" className="form-control rounded-2xl block w-[550px] p-3 rounded bg-transparent border text-white focus:outline-none"></input>
+                                                <input type="password" value={password} onChange={e => setPassword(e.target.value)} name="password" className="form-control rounded-2xl block w-[550px] p-3 bg-transparent border text-white focus:outline-none"></input>
                                             </div>
                                         </div>
                                         <div className="mb-5">
                                             <label htmlFor="confirm_password" className="block mb-2 text-sm font-medium text-white">
                                                 Confirm Password
                                             </label>
-                                            <input type="password" name="confirm_password" className="form-control rounded-2xl block w-[550px] p-3 rounded bg-transparent border text-white focus:outline-none"></input>
+                                            <div className="w-[500px]">
+                                                <input type="password" name="confirm_password" className="form-control rounded-2xl block w-[550px] p-3 bg-transparent border text-white focus:outline-none"></input>
+                                            </div>
                                         </div>
                                         <Button value="Register" styles="w-full" />
                                     </div>
