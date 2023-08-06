@@ -30,7 +30,7 @@ api.forEach(r => {
 
 app.listen(4000, () => {
     finishedMessage += "\n\n\x1b[36mDatabase:";
-    const uri = "mongodb+srv://apitunnel:2yZ6ZhC5WpHTmPE@cluster0.l1wktoe.mongodb.net/primary?retryWrites=true&w=majority";
+    const uri = "";
     mongoose.connect(uri, {
         useNewUrlParser: true,
         useUnifiedTopology: true
